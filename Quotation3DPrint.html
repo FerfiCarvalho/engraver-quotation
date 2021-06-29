@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quotations for 3D printing</title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+function chooseFont(font) {
+    document.getElementById("nome").style.fontFamily = font.value;
+    }
+
+function calculate (frase, heightS){
+
+      //Quantidade de letras
+      var quantity = frase.length;
+      console.log("The fase is: ",frase);
+      console.log("It has ",quantity, " characters");
+
+      //Letter height (mm) - heightS
+      if (heightS<3){
+          document.getElementById("validation").innerHTML = "The height is too low";
+          lengthS="N/A";
+          finalPrice="N/A";
+
+      } else {
+
+      //document.getElementById("validation").innerHTML = "Height OK";
+
+      //String Length (mm)
+      var lenghtL = heightS*0.7
+      var lengthS = quantity*lenghtL;
+      console.log("The length of the string will be: ", lengthS);
+
+      //Calculo Material base
+      var baseH = 3;
+      var baseM = lengthS*heightS*baseH;
+      console.log ("The volume of the base will be ", baseM, " mm3", baseH, " x ",lengthS, " x ", heightS);
+
+      //Calculo Material letras
+      var letterM = baseM*0.3;
+      console.log("The volume of the letters will be ", letterM, " mm3");
+
+      //Calculo Material Pega
+      var pegaM = 2*14*lengthS;
+
+      //€ Material + Impressão
+      var density = 1.23;
+      var euroGram = 0.04;
+      var totalM = baseM+letterM+pegaM;
+      console.log ("Total volume: ", totalM);
+      var totalE = (totalM*density*euroGram)/100;
+      console.log ("€ in material: ", totalE);
+      var profit = 0.4;
+      var finalPrice = totalE/profit;
+      console.log ("End price: ", finalPrice);
+
+      }
+
+      //print to Webpage
+      document.getElementById("comprimento").innerHTML = (Math.round(lengthS*10)/10);
+      document.getElementById("preco").innerHTML = (Math.round(finalPrice*10)/10);
+
+
+
+
+}
+
+    </script>
+
+    <style>
+
+        .coluna {
+          float: left;
+          width: 20%;
+          padding: 30px;
+
+        }
+
+        /* Clear floats after the columns */
+        .linha:after {
+          content: "";
+          display: table;
+          clear: both;
+          text-align: center;
+        }
+
+        .titulo {
+          text-align: center;
+          padding: 30px;
+          background-color: #3f3f3f;
+        }
+
+
+
+
+    </style>
+
+    <div class="titulo">
+    <img src="https://www.imprima3d.pt/wp-content/uploads/2019/06/IMPRIMA_3D_LOGO_WEBSITE.png" alt="IMPRIMA3D.PT">
+  </div>
+
+
+    <div class="linha">
+      <div class="coluna">
+        <h3>Please choose the letter type</h3>
+        <select id="letterType" onchange="chooseFont(this);">
+          <option value="Arial">Arial</option>
+                <option value="Sans Serif" selected>Sans Serif</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Arial Black">Arial Black</option>
+                <option value="Impact">Impact</option>
+                <option value="Bookman">Bookman</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Palatino">Palatino</option>
+                <option value="Georgia">Georgia</option>
+        </select>
+      </div>
+
+        <div class="coluna">
+          <h3>What do you want to write?</h3>
+          <input type="text" id="nome" value="Your Name">
+        </div>
+
+        <div class="coluna">
+          <img src="https://www.imprima3d.pt/wp-content/uploads/2021/06/Quotation-e1624984137846.jpg">
+
+        </div>
+
+      </div>
+
+      <div class="linha">
+        <div class="coluna">
+          <h3> <label for="height">Desired Height</label> </h3>
+          <h3> <input type="number" id="altura" value="3"> </h3>
+          <output id="validation"</ouput>
+        </div>
+
+        <div class="coluna">
+          <h3> <label for="lenght">The length will be</label>
+          <output id="comprimento"></output> mm </h3>
+        </div>
+
+      </div>
+
+      <div class="coluna">
+        <div class="linha">
+          <h3>The price will be around</h3>
+          <output id="preco"></output> Euros <br><br>
+          <input type="button" value="Quotation" onclick="calculate(nome.value, altura.value)">
+        </div>
+      </div>
+
+
+  </body>
+</html>
